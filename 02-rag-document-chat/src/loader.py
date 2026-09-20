@@ -4,7 +4,7 @@ from pypdf import PdfReader
 class DocumentLoadError(Exception):
     pass
 
-def load_documnet(file_path: str) -> str:
+def load_document(file_path: str) -> str:
     """
     Load text content from a .txt or .pdf file.
     """
