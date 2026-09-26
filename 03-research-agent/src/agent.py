@@ -28,7 +28,7 @@ def run_agent(user_question: str, max_steps: int = 5) -> str:
     for step in range(max_steps):
         try:
             response = client.models.generate_content(
-                model="gemini-3.6-flash",
+                model="gemini-3.8-flash",
                 contents=conversation,
                 config=config
             )
@@ -68,4 +68,3 @@ def run_agent(user_question: str, max_steps: int = 5) -> str:
             return candidate.content.parts[0].text
 
     return "Agent reached maximum steps without a final answer."
-    

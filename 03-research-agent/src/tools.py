@@ -32,6 +32,18 @@ def calculator(expression: str) -> str:
         return f"Calculation failed: {e}"
 
 
+def weather(query : str) -> str:
+    """
+    Tell us about the weather
+    """
+    try:
+        results_weather = tavily_client.search(query=query, max_results = 3)
+        summaries_weather = [r["content"][:300] for r in results_weather["results"]]
+        return "\n\n".join(summaries_weather)
+    except Exception as e:
+        return f"Search Failed : {e}"
+     
+
 # This describes the tools to Gemini in a format it understands
 TOOL_DEFINITIONS = [
     {
@@ -55,11 +67,24 @@ TOOL_DEFINITIONS = [
             },
             "required": ["expression"]
         }
+    },
+    {
+        "name": "weather",
+        "description": "Search the web for current weather conditions and provide a description of the weather.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {"type": "string", "description": "The weather query"}
+            },
+            "required": ["query"]
+        }
     }
 ]
+
 
 # Maps tool names to actual functions, so the agent can call them by name
 AVAILABLE_FUNCTIONS = {
     "web_search": web_search,
-    "calculator": calculator
+    "calculator": calculator,
+    "weather": weather
 }
